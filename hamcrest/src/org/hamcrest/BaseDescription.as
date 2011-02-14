@@ -132,6 +132,7 @@ package org.hamcrest
         {
             var separate:Boolean = false;
 
+            append("{" + list.length + "}");
             append(start);
             
             for each (var item:Object in list)

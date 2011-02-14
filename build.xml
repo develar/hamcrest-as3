@@ -26,7 +26,7 @@
 	<property name="report.flexunit.loc" location="${report.loc}/flexunit" />
 
 	<!-- SDK config -->
-	<property name="FLEX_HOME" location="${env.FLEX_HOME}" />
+	<property name="FLEX_HOME" location="/User/develar/workspace/gumbo_t" />
 	<taskdef resource="flexTasks.tasks" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar" />
 
 	<target name="clean">

@@ -1,8 +1,9 @@
 package org.hamcrest.collection
 {
 	import org.hamcrest.Matcher;
+import org.hamcrest.WrapUtil;
 
-	/**
+/**
 	 * Matches if the item being matched is in the given Array.
 	 * 
 	 * @see org.hamcrest.collection.InArrayMatcher
@@ -24,16 +25,7 @@ package org.hamcrest.collection
             matchers = rest[0];
         }
         
-        var elementMatchers:Array = matchers.map(wrapInEqualToIfNotMatcher);
-        
-        return new InArrayMatcher(elementMatchers);
+        WrapUtil.wrapList(matchers);
+        return new InArrayMatcher(matchers);
     }
-}
-
-import org.hamcrest.Matcher;
-import org.hamcrest.object.equalTo;
-
-internal function wrapInEqualToIfNotMatcher(item:Object, i:int, a:Array):Matcher
-{
-    return item is Matcher ? item as Matcher : equalTo(item);
 }

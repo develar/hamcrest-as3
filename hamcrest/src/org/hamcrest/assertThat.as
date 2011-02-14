@@ -1,7 +1,10 @@
 package org.hamcrest
 {
+import org.hamcrest.collection.array;
+import org.hamcrest.object.HasPropertiesMatcher;
+import org.hamcrest.object.equalTo;
 
-    /**
+/**
      * <code>assertThat</code> accepts four forms of arguments:
      *
      * <ul>
@@ -43,9 +46,17 @@ package org.hamcrest
         {
             assertThatMatcher("", rest[0], rest[1])
         }
-        else if (rest.length == 2)
+        else if (rest.length == 2 && rest[1] is Array)
+        {
+            assertThatMatcher("", rest[0], array(rest[1]));
+        }
+        else if (rest.length == 2 && rest[1] is Boolean)
         {
             assertThatBoolean(rest[0], Boolean(rest[1]));
+        }
+        else if (rest.length == 2)
+        {
+            assertThatMatcher("", rest[0], rest[1].constructor === Object ? new HasPropertiesMatcher(rest[1]) : equalTo(rest[1]));
         }
         else if (rest.length == 1)
         {

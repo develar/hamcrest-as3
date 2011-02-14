@@ -2,8 +2,9 @@ package org.hamcrest.collection
 {
     
     import org.hamcrest.Matcher;
-    
-    /**
+import org.hamcrest.WrapUtil;
+
+/**
      * Creates a Matcher that only matches if each of the matchers given are satisfied by the
      * element at the same index in the array that is being matched.
      *
@@ -37,17 +38,8 @@ package org.hamcrest.collection
         {
             matchers = rest[0];
         }
-        
-        var elementMatchers:Array = matchers.map(wrapInEqualToIfNotMatcher);
-        
-        return new IsArrayMatcher(elementMatchers);
+
+        WrapUtil.wrapList(matchers);
+        return new IsArrayMatcher(matchers);
     }
-}
-
-import org.hamcrest.object.equalTo;
-import org.hamcrest.Matcher;
-
-internal function wrapInEqualToIfNotMatcher(item:Object, i:int, a:Array):Matcher
-{
-    return item is Matcher ? item as Matcher : equalTo(item);
 }

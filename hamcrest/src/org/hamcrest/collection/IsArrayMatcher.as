@@ -1,10 +1,12 @@
 package org.hamcrest.collection
 {
-    import org.hamcrest.Description;
-    import org.hamcrest.Matcher;
-    import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.AssertionError;
+import org.hamcrest.Description;
+import org.hamcrest.StringDescription;
+import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.assertThatMatcher;
 
-    /**
+/**
      * Creates a Matcher that only matches if each of the matchers given are satisfied by the
      * element at the same index in the array that is being matched.
      *
@@ -49,19 +51,22 @@ package org.hamcrest.collection
          */
         override public function matchesSafely(item:Object):Boolean
         {
-            var array:Array = toArray(item);
-            
-            if (array.length != _elementMatchers.length)
-            {
-                return false;
-            }
-            
-            function matchesElement(matcher:Matcher, i:int, a:Array):Boolean
-            {
-                return matcher.matches(array[i]);
-            }
+            var array:Object = toArray(item);
 
-            return _elementMatchers.every(matchesElement);
+          if (array.length != _elementMatchers.length) {
+            var errorDescription:Description = new StringDescription();
+            errorDescription.appendText("Expected: ");
+            describeTo(errorDescription);
+            errorDescription.appendText("\n     but: ");
+            errorDescription.appendList(descriptionStart(), descriptionSeparator(), descriptionEnd(), array as Array);
+            throw new AssertionError(errorDescription.toString(), null, null, null, item);
+          }
+
+          for (var i:int = 0; i < _elementMatchers.length; i++) {
+            assertThatMatcher(null, array[i], _elementMatchers[i]);
+          }
+
+            return true;
         }
 
         /**
@@ -96,22 +101,4 @@ package org.hamcrest.collection
             return "]";
         }
     }
-}
-
-/**
- * Converts an Array-like Object to an Array.
- * 
- * @param iterable Object
- * @returns Array
- */
-internal function toArray(iterable:Object):Array 
-{
-    var result:Array = [];
-	
-	for each (var item:Object in iterable)
-	{
-		result[result.length] = item;
-	}
-	
-	return result;		
 }

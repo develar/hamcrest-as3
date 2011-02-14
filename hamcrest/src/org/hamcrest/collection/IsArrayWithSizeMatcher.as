@@ -38,7 +38,7 @@ package org.hamcrest.collection
          */
         override public function matchesSafely(item:Object, mismatchDescription:Description):Boolean
         {
-            var array:Array = toArray(item);
+            var array:Object = toArray(item);
             var result:Boolean = true;
             
             if (!_sizeMatcher.matches(array.length))
@@ -63,22 +63,4 @@ package org.hamcrest.collection
                 .appendDescriptionOf(_sizeMatcher);
         }
     }
-}
-
-/**
- * Converts an Array-like Object to an Array.
- * 
- * @param iterable Object
- * @returns Array
- */
-internal function toArray(iterable:Object):Array 
-{
-    var result:Array = [];
-	
-	for each (var item:Object in iterable)
-	{
-		result[result.length] = item;
-	}
-	
-	return result;		
 }
