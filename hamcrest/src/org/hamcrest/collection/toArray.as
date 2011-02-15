@@ -18,19 +18,19 @@ internal function toArray(iterable:Object):Object {
   var n:int;
   var i:int;
   var result:Array;
-  if ("getChildAt" in iterable) {
+  if ("getElementAt" in iterable) {
+    n = iterable.numElements;
+    result = new Array(n);
+    for (i = 0; i < n; i++) {
+      result[i] = iterable.getElementAt(i);
+    }
+  }
+  else if ("getChildAt" in iterable) {
     var o:DisplayObjectContainer = DisplayObjectContainer(iterable);
     n = o.numChildren;
     result = new Array(n);
     for (i = 0; i < n; i++) {
       result[i] = o.getChildAt(i);
-    }
-  }
-  else if ("getElementAt" in iterable) {
-    n = iterable.numElements;
-    result = new Array(n);
-    for (i = 0; i < n; i++) {
-      result[i] = iterable.getElementAt(i);
     }
   }
   else {

@@ -1,5 +1,7 @@
 package org.hamcrest.object
 {
+import flash.display.Sprite;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
@@ -46,6 +48,7 @@ import org.hamcrest.TypeSafeDiagnosingMatcher;
                 return false;
             }
 
+          var isStyle:Boolean;
           if (!item.hasOwnProperty(_propertyName)) {
             var found:Boolean;
             if (_propertyName is QName) {
@@ -59,13 +62,13 @@ import org.hamcrest.TypeSafeDiagnosingMatcher;
               }
             }
 
-            if (!found) {
+            if (!found && !(isStyle = item is Sprite && item.hasOwnProperty("getStyle") && item.hasOwnProperty("inheritingStyles") && item.hasOwnProperty("nonInheritingStyles"))) {
               mismatchDescription.appendText('no property ').appendValue(_propertyName);
               return false;
             }
           }
             
-            var propertyValue:* = item[_propertyName];
+            var propertyValue:* = isStyle ? item.getStyle(_propertyName) : item[_propertyName];
             var valueMatches:Boolean = _valueMatcher.matches(propertyValue);
             
             if (!valueMatches)
