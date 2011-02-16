@@ -1,7 +1,6 @@
 package org.hamcrest.object
 {
 import org.hamcrest.Description;
-import org.hamcrest.Matcher;
 import org.hamcrest.SelfDescribing;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 import org.hamcrest.WrapUtil;
@@ -44,7 +43,7 @@ import org.hamcrest.assertThatMatcher;
         // to the user from the existing error message.
         // 
         var value:Object = _properties[field];
-        assertThatMatcher(null, item, new HasPropertyWithValueMatcher(getQName(field), value is Matcher ? Matcher(value) : WrapUtil.wrap(value)));
+        assertThatMatcher(null, item, new HasPropertyWithValueMatcher(getQName(field), WrapUtil.unwrap(value)));
 //				if (!propertyMatcher.matches(item))
 //				{
 //					if (needsComma)

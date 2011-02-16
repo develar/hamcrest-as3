@@ -25,7 +25,7 @@ import org.hamcrest.WrapUtil;
             matchers = rest[0];
         }
         
-        WrapUtil.wrapList(matchers);
+        WrapUtil.unwrapList(matchers);
         return new InArrayMatcher(matchers);
     }
 }
