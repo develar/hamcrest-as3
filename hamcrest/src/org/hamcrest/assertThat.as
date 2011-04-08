@@ -56,7 +56,7 @@ import org.hamcrest.object.equalTo;
         }
         else if (rest.length == 2)
         {
-            assertThatMatcher("", rest[0], rest[1].constructor === Object ? new HasPropertiesMatcher(rest[1]) : equalTo(rest[1]));
+            assertThatMatcher("", rest[0], (rest[1] != null && rest[1].constructor === Object) ? new HasPropertiesMatcher(rest[1]) : equalTo(rest[1]));
         }
         else if (rest.length == 1)
         {
